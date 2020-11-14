@@ -40,7 +40,7 @@ export const initialState = {
   columns: {
     'column-1': {
       id: 'column-1',
-      taskIds: ['elem-1','elem-3', 'elem-1','elem-3','elem-1','elem-3'],
+      taskIds: ['elem-1','elem-3'],
     },
     'column-2': {
       id: 'column-2',

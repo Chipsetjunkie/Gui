@@ -1,4 +1,5 @@
-import { Button, Input, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
+import { Button, Input, Card, CardImg, CardBody } from 'reactstrap';
+//import { Button, Input, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 import React from 'react';
 
 

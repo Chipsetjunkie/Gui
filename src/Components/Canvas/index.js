@@ -1,9 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Container, Row, Col } from 'reactstrap';
+import { Draggable } from 'react-beautiful-dnd';
+import { Droppable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 import {initialState} from '../State'
 import  {constructElements} from "../Elements";
-import { v4 as uuidv4 } from 'uuid';
-import "./main.css"
+
+
+const Span = styled.div`
+  display:flex;
+  border:1px solid green;
+  flex-direction:column;
+  justify-content:center;
+  background-color: ${props => props.isdragging ? 'orange' : 'white'};
+`;
+
+const Div = styled.div`
+  border:1px dotted ${props => props.isdragging ? 'red' : 'rgba(0,0,0,0)'};
+`;
+
 
 const colStyle= {
   width:"10vh",
@@ -31,52 +46,59 @@ const rowStyle = {
 
 }
 
-const spanStyle={
-  display:"flex",
-  flexDirection:"column",
-  justifyContent:"center",
-  alignItems:"center"
-}
-
-//<span style={spanStyle} id={count} onMouseEnter={(e)=>this.hover(e)} onMouseLeave={(e)=>this.leave(e)}>{count}</span>
 
 class Canvas extends Component {
   state = initialState
-
-  // hover = c =>{
-  //   c.target.style['background'] = "orange";
-  // }
-  //
-  // leave = c =>{
-  //   c.target.style['background'] = "SlateBlue";
-  // }
-
 
 
   buildCanvas = () =>{
     const order = this.state.columnOrder
     var canvas = []
-    var row = []
-    var count = 0
-  for(var j=0; j<3; j++){
-        //row.push(<Col key={uuidv4()} sm="4" style={colStyle}><span style={spanStyle} id={count} onClick={this.clickHandler}>{count}</span></Col>)
-        row.push(<Col key={uuidv4()} sm="4" style={colStyle}>
-        <span style={spanStyle} id={count} onClick={this.clickHandler}>
-        {this.state.columns[order[count]].taskIds.length>0 && this.state.columns[order[count]].taskIds.map(c=>{
-          return constructElements(this.state.elements[c])
-          //: null
-        })}
-        </span>
-        </Col>)
-        count +=1;
-    }
-    canvas.push(<Row key={uuidv4()} style={rowStyle}>{row}</Row>)
+    const row = order.map((col,index) =>(
+      <Col key={col+index} xs="12" sm="4" style={colStyle}>
+      <Droppable droppableId={col}>
+      {(provided,snap) => (
+      <Span
+      ref={provided.innerRef}
+      {...provided.droppableProps}
+      isdragging={snap.isDraggingOver}
+      >
+        {this.state.columns[col].taskIds.length>0 && this.state.columns[col].taskIds.map((c,index)=>{
+          return (
+            <Fragment key={c+index}>
+            <Draggable
+              draggableId = {c}
+              index={index}
+            >
+            {(provided, snapshot) => (
+            <Div
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              ref={provided.innerRef}
+              isdragging={snapshot.isDragging}
+              >
+            {constructElements(this.state.elements[c])}
+            </Div>
+
+            )}
+            </Draggable>
+            </Fragment>
+          )
+      })}
+      {provided.placeholder}
+      </Span>
+      )}
+      </Droppable>
+      </Col>
+    ))
+
+    canvas.push(<Row key={"row"} style={rowStyle}>{row}</Row>)
     return canvas
   }
 
   render() {
-    console.log(this.state)
     return (
+
       <Container fluid={true} style={conStyle}>
         {this.buildCanvas()}
       </Container>
