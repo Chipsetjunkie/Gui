@@ -3,7 +3,6 @@ import { Container, Row, Col } from 'reactstrap';
 import { Draggable } from 'react-beautiful-dnd';
 import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
-import {initialState} from '../State'
 import  {constructElements} from "../Elements";
 
 
@@ -48,11 +47,10 @@ const rowStyle = {
 
 
 class Canvas extends Component {
-  state = initialState
 
 
-  buildCanvas = () =>{
-    const order = this.state.columnOrder
+  buildCanvas = (state) =>{
+    const order = state.columnOrder
     var canvas = []
     const row = order.map((col,index) =>(
       <Col key={col+index} xs="12" sm="4" style={colStyle}>
@@ -63,7 +61,7 @@ class Canvas extends Component {
       {...provided.droppableProps}
       isdragging={snap.isDraggingOver}
       >
-        {this.state.columns[col].taskIds.length>0 && this.state.columns[col].taskIds.map((c,index)=>{
+        {state.columns[col].taskIds.length>0 && state.columns[col].taskIds.map((c,index)=>{
           return (
             <Fragment key={c+index}>
             <Draggable
@@ -77,7 +75,7 @@ class Canvas extends Component {
               ref={provided.innerRef}
               isdragging={snapshot.isDragging}
               >
-            {constructElements(this.state.elements[c])}
+            {constructElements(state.elements[c])}
             </Div>
 
             )}
@@ -100,7 +98,7 @@ class Canvas extends Component {
     return (
 
       <Container fluid={true} style={conStyle}>
-        {this.buildCanvas()}
+        {this.buildCanvas(this.props.state)}
       </Container>
     );
   }

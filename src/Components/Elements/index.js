@@ -1,34 +1,25 @@
-import { Button, Input, Card, CardImg, CardBody } from 'reactstrap';
-//import { Button, Input, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
+import { Button, Input} from 'reactstrap';
 import React from 'react';
 
 
 export const constructElements = data =>{
   const {id, type, property} = data
+  const {value, ...rest_property} = property
   switch (type.toLowerCase()) {
     case "button":
-      const {value,outline,color,size} = property
-      return (<Button outline={outline} id={id} style={{margin:"10px"}}color={color} size={size}>{value}</Button>)
+      var {outline ,size, color, ...buttonstyle} = rest_property
+      return (<Button outline={outline} id={id} style={buttonstyle} color={color} size={size}>{value}</Button>)
 
     case "input":
-      const {type,placeholder,...style} = property
-      return (<Input placeholder={placeholder} type={type} style={style}></Input>)
-
-    case "card":
-          return(
-              <Card style={{width:"300px", height:"400px"}}>
-              <CardImg top width="100%" src="/assets/318x180" alt="Card image cap" />
-              <CardBody>
-                body
-              </CardBody>
-            </Card>
-          )
+      const {type,placeholder,...inputstyle} = rest_property
+      return (<Input placeholder={placeholder} type={type} style={{...inputstyle, transition:"0.3s"}}></Input>)
 
     case "p":
-        return <p>{property.value}</p>
+        return <p style={rest_property}>{value}</p>
 
     case "h":
-        const hd = React.createElement(property.tag, {}, property.value);
+        const {tag, ...hstyle} = rest_property
+        const hd = React.createElement(tag, {style:{...hstyle, transition:"0.3s"}}, value);
         return hd
 
   default:

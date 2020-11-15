@@ -4,28 +4,55 @@ export const initialState = {
               id: 'elem-1',
               type:'Button',
               property:{
-                outline:false,
                 color:"primary",
+                outline:false,
+                size:"",
                 value:"Click me",
-                size:""
+                height:"",
+                width:"300px",
+                margin:"10px",
+                padding:"",
+                position:"",
+                top:"",
+                down:"",
+                left:"",
+                right:""
               }
             },
     'elem-3': {
               id: 'elem-3',
               type:'Button',
               property:{
-                  value:"Click me",
-                  background:"Orange"
+                color:"primary",
+                outline:false,
+                size:"",
+                value:"Click me",
+                height:"",
+                width:"300px",
+                margin:"10px",
+                padding:"",
+                position:"",
+                top:"",
+                down:"",
+                left:"",
+                right:""
               }
           },
     'elem-4':{
       id:'elem-4',
       type:"Input",
       property:{
-        type:"text",
         placeholder:"Text input",
+        height:"",
         width:"300px",
-        margin:"10px"
+        margin:"10px",
+        padding:"",
+        position:"",
+        top:"",
+        down:"",
+        left:"",
+        right:"",
+        color:""
       }
     },
     'elem-5':{
@@ -33,7 +60,17 @@ export const initialState = {
       type:"h",
       property:{
         value:"test paragraph",
-        tag:"h1"
+        tag:"h1",
+        height:"",
+        width:"300px",
+        margin:"10px",
+        padding:"",
+        position:"",
+        top:"",
+        down:"",
+        left:"",
+        right:"",
+        color:""
       }
     }
   },
@@ -52,5 +89,6 @@ export const initialState = {
       }
   },
   // Facilitate reordering of the columns
-  columnOrder: [ 'column-1','column-2','column-3']
+  columnOrder: [ 'column-1','column-2','column-3'],
+  activeElements:['elem-1', 'elem-3', 'elem-4', 'elem-5']
 };

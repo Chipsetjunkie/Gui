@@ -5,10 +5,9 @@ import styled from 'styled-components';
 
 
 const conStyle = {
-  display:"inline",
   position:"relative",
-  top:"9vh",
-  border:"1px solid black"
+  top:"6vh",
+  width:"100%"
 }
 
 const TaskList = styled.div`
@@ -35,7 +34,7 @@ const ItemContainer = styled.div`
 class Panel extends Component {
 
   displayPanelItems = () =>{
-    const items = ['button', 'input', 'card', 'h', 'p']
+    const items = ['button', 'input', 'h', 'p']
     return items.map((item, index)=>(
         <Fragment key={index+item}>
         <Draggable
