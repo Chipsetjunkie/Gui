@@ -2,16 +2,16 @@ import React, { Component, Fragment } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { Draggable } from 'react-beautiful-dnd';
 import { Droppable } from 'react-beautiful-dnd';
+import { Scrollbars } from 'react-custom-scrollbars';
 import styled from 'styled-components';
 import  {constructElements} from "../Elements";
 
 
 const Span = styled.div`
   display:flex;
-  border:1px solid green;
+  border:1px solid rgba(0,0,0,0);
   flex-direction:column;
-  justify-content:center;
-  background-color: ${props => props.isdragging ? 'orange' : 'white'};
+  background-color: ${props => props.isdragging ? 'orange' : 'rgba(0,0,0,0)'};
 `;
 
 const Div = styled.div`
@@ -21,27 +21,25 @@ const Div = styled.div`
 
 const colStyle= {
   width:"10vh",
-  background:"SlateBlue",
-  border:"1px solid black",
+  background:"rgba(0,0,0,0)",
+  //border:"1px solid black",
   padding:0,
   display:"flex",
-  justifyContent:"center",
   alignContent:"center"
 
 }
 
 const conStyle = {
-      height:"79.6vh",
+      height:"77vh",
       marginTop:"20px",
-      overflowY:"scroll",
-      border:"1px solid black"
+      borderImage: "url 50 round"
 }
 
 const rowStyle = {
 
     height:"100%",
-    background:"royalblue",
-    border:"1px solid black",
+    //background:"royalblue",
+    //border:"1px solid black",
 
 }
 
@@ -96,10 +94,11 @@ class Canvas extends Component {
 
   render() {
     return (
-
+      <Scrollbars style={{height:"79.6vh"}} autoHide autoHideTimeout={100}>
       <Container fluid={true} style={conStyle}>
         {this.buildCanvas(this.props.state)}
       </Container>
+      </Scrollbars>
     );
   }
 

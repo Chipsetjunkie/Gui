@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+import { Scrollbars } from 'react-custom-scrollbars';
 import Options from "./options";
 import "./meta.css";
 
@@ -18,36 +19,42 @@ class Meta extends Component {
   }
 
   closeProperty = (e) =>{
-    this.setState({...this.state,enter:true, data:{}, type:""})
+    this.setState({...this.state,enter:true, data:{}, type:"", id:null})
   }
 
   render() {
-    const s = Object.entries(this.state)
     return (
       <div id="parentDiv">
+      {!this.state.enter?
       <FadeTransform in={!this.state.enter} duration={200}
-        transformProps = {{exitTransform:"translateX(-50px)"}}
         fadeProps = {{exitOpacity:0}}>
       <div id="parent">
           <div>
             <span onClick={this.closeProperty}>x</span>
           </div>
             <div id="child">
-                <Options property={this.state.data} type={this.state.type} id={this.state.id} changeProperty={this.props.changeProperty}/>
+                <Options property={this.props.state.elements[this.state.id].property} type={this.state.type} id={this.state.id} changeProperty={this.props.changeProperty}/>
             </div>
       </div>
-      </FadeTransform>
-      <FadeTransform in={this.state.enter} duration={200}
-        transformProps = {{exitTransform:"translateX(100px)"}}
-        fadeProps = {{exitOpacity:0}}>
-      <div id="childDiv">
-        {this.props.state.activeElements.map((i,index) =>(
-          <p key={index} style={{cursor:"pointer"}} onClick={e=> this.changeProperty(e,i)}>{i}</p>
+      </FadeTransform>:
+
+        <Scrollbars style={{height:"250px", width:"40%"}} autoHideTimeout={100} renderTrackVertical={props => <div {...props} className="track-vertical" style={{display:"none"}}/>} autoHide>
+        <div id="childDiv">
+        <Stagger in duration={100}>
+        {Object.keys(this.props.state.activeElements).map((i,index) =>(
+          <Fade key={index}>
+          <div  id="option-tab">
+          <p style={{cursor:"pointer"}} onClick={e=> this.changeProperty(e,this.props.state.activeElements[i].id)}>{this.props.state.activeElements[i].name}</p>
+          </div>
+          </Fade>
         ))
         }
-        </div>
-      </FadeTransform>
+       </Stagger>
       </div>
+      </Scrollbars>
+      }
+      </div>
+
     );
   }
 
@@ -55,7 +62,3 @@ class Meta extends Component {
 
 
 export default Meta;
-//
-// {s.length>0 && s.map((i,id)=>(
-//   <p key={id+i[0]}> {i[0]} : {String(i[1])}</p>
-// ))}

@@ -1,4 +1,4 @@
-import { Button, Input} from 'reactstrap';
+import { Button, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import React from 'react';
 
 
@@ -11,8 +11,25 @@ export const constructElements = data =>{
       return (<Button outline={outline} id={id} style={buttonstyle} color={color} size={size}>{value}</Button>)
 
     case "input":
-      const {type,placeholder,...inputstyle} = rest_property
-      return (<Input placeholder={placeholder} type={type} style={{...inputstyle, transition:"0.3s"}}></Input>)
+      const {type,placeholder,label,...inputstyle} = rest_property
+
+      if (type==="text"){
+          return(<div style={{...inputstyle, transition:"0.3s"}}>
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>{label}</InputGroupText>
+              </InputGroupAddon>
+              <Input type="text" placeholder="username" />
+            </InputGroup>
+            </div>
+          )
+      }
+      else{
+      return (<div style={{...inputstyle,transition:"0.3s"}}>
+            <label style={{paddingTop:"2px"}}>{label}</label>
+            <Input style={{marginLeft:"4px"}} placeholder={placeholder} type={type}>
+            </Input></div>)
+            }
 
     case "p":
         return <p style={rest_property}>{value}</p>

@@ -6,7 +6,7 @@ import {initialState} from './Components/State';
 import * as types from './Components/State/Types';
 import { Container, Row, Col } from 'reactstrap';
 import { DragDropContext } from 'react-beautiful-dnd';
-
+import "./App.css"
 
 const  elements = {
       "button": types.button,
@@ -56,16 +56,43 @@ class App extends Component {
 
   onDragEnd = prop =>{
       const {destination, source, draggableId } = prop;
-      console.log(destination)
-      console.log(source)
-      console.log(draggableId)
-      if (destination.droppableId === "Footer" || destination.droppableId === undefined) return;
+      // console.log(destination)
+      // console.log(source)
+      // console.log(draggableId)
+      if (destination===null || destination.droppableId === "Footer") return;
+
+
+      if (destination.droppableId === "Bin"){
+        var data = this.state.columns[source.droppableId].taskIds
+        data = data.filter(i => i !== draggableId)
+        const elem = {...this.state.elements}
+        delete elem[draggableId]
+        const active = {...this.state.activeElements}
+        delete active[draggableId]
+        this.setState(
+              {...this.state,
+                elements:elem,
+                activeElements:active,
+                columns:{
+                  ...this.state.columns,
+                  [source.droppableId]:{
+                    ...this.state.columns[source.droppableId],
+                    taskIds:data
+                  }
+                }
+
+              })
+
+        return;
+
+      }
 
       if (source.droppableId === "Footer"){
          const last_item = parseInt(Object.keys(this.state.elements).splice(-1)[0].split('-')[1])+1
          const e = {id:"elem-"+last_item, ...elements[draggableId]}
          const tasks = this.rearrange([...this.state.columns[destination.droppableId].taskIds], null, null, destination.index, "elem-"+last_item)
-
+         const active = {...this.state.activeElements}
+         active["elem-"+last_item]={id:"elem-"+last_item,name:draggableId}
          this.setState({
            ...this.state,
            columns:{
@@ -78,7 +105,8 @@ class App extends Component {
            elements:{
              ...this.state.elements,
              ["elem-"+last_item]:e
-           }
+           },
+           activeElements:active
         })
       }
       else{
@@ -116,9 +144,7 @@ class App extends Component {
        }
 
   render() {
-    console.log(this.state)
-
-    return (
+    return (<>
       <DragDropContext onDragEnd={this.onDragEnd}>
       <Container
       fluid={true}>
@@ -131,6 +157,7 @@ class App extends Component {
       </Row>
       </Container>
       </DragDropContext>
+      </>
     );
   }
 }

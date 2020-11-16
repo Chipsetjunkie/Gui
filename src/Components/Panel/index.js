@@ -7,8 +7,24 @@ import styled from 'styled-components';
 const conStyle = {
   position:"relative",
   top:"6vh",
-  width:"100%"
+  width:"100%",
+  display:"flex",
+  justifyContent:"space-around"
 }
+
+const binStyle={
+    border:"1px solid black",
+    justifyContent:"flex-end",
+    width:"100px",
+    height:"100px"
+}
+
+const Bin = styled.div`
+  background-color: ${props => props.isdragging ? 'lightGreen' : 'white'};
+  width:100%;
+  height:100%;
+  border:1px solid green;
+`;
 
 const TaskList = styled.div`
   padding: 8px;
@@ -60,6 +76,7 @@ class Panel extends Component {
     return (
 
       <div style={conStyle} >
+      <div></div>
           <Droppable
                 droppableId={"Footer"}
                 direction="horizontal"
@@ -76,6 +93,19 @@ class Panel extends Component {
               </TaskList>
             }
           </Droppable>
+          <div style={binStyle}>
+          <Droppable droppableId={"Bin"}>
+          {(provided, snapshot) =>
+            <Bin
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            isdragging={snapshot.isDraggingOver}>
+              bin
+              {provided.placeholder}
+            </Bin>
+          }
+          </Droppable>
+          </div>
         </div>
 
 
