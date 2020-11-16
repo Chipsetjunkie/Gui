@@ -5,7 +5,6 @@
   display:flex;
   justify-content:flex-end;
   align-items:center;
-  border: 1px solid red;
   flex-grow:1
 }
 
@@ -14,6 +13,8 @@
   border:1px solid black;
   padding:10px;
   width: 180px;
+  color:white;
+  background:#191921;
 }
 
 #parent> div:first-of-type{
@@ -37,7 +38,6 @@
   flex-wrap: wrap;
   justify-content: space-between;
   font-size: 10px;
-  color: grey;
 }
 
 hr{
@@ -47,14 +47,104 @@ hr{
 p input{
   width: 30px;
   border:0;
-  border:1px solid rgba(0,0,0,0.5);
+  border:1px solid white;
   border-radius: 5px;
   margin: 6px;
   padding: 2px;
   font-size:11px;
+  color:white;
+  background: rgba(0,0,0,0);
 }
 
-#option-tab{
+
+#card{
+   margin:10px;
+   width: 100px;
+   height: 50px;
+   border-radius: 10px;
+   background:#191921;
+   color:white;
+   opacity: 0.5;
+   transition: 0.3s;
+}
+
+#card:hover{
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+#settings{
+  display: flex;
+  justify-content: flex-end;
+}
+
+#settings img{
+  margin: 4px;
+  margin-bottom: 0;
+  margin-top:2px;
+  cursor: pointer;
+}
+
+
+#indicator{
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 5px;
+}
+
+#indicator>p:first-of-type{
+  position: relative;
+  bottom:10px;
+}
+
+
+.blue{
+  height: 5px;
+  width: 5px;
+  background: rgba(165,229,254);
+  border-radius: 50px;
+  box-shadow: 0 0 10px 1px rgba(106, 172, 255,0.2),
+              0 0 10px 2px rgba(46, 88, 255,0.2),
+              0 0 15px 2px rgba(46, 73, 242,0.1),
+             0 0 15px 2px rgba(56, 62, 208,0.2);
+}
+
+
+
+.purple{
+  height: 5px;
+  width: 5px;
+  background: rgba(248, 240, 251);
+  border-radius: 50px;
+  box-shadow: 0 0 10px 1px rgba(232, 94, 242,0.5),
+              0 0 8px 2px rgba(189, 21, 222,0.1),
+              0 0 8px 2px rgba(176, 31, 214,0.1),
+             0 0 8px 2px rgba(105, 20, 176,0.1);
+  transition: 0.2s;
+}
+
+.green{
+  height: 5px;
+  width: 5px;
+  background: rgba(202, 253, 86);
+  border-radius: 50px;
+  transition: 0.2s;
+}
+
+.orange{
+  height: 5px;
+  width: 5px;
+  background: rgba(252, 251, 118);
+  border-radius: 50px;
+  box-shadow: 0 0 7px 1px rgba(255, 201, 91,0.2),
+              0 0 7px 1px rgba(255, 166, 63,0.2),
+              0 0 7px 1px rgba(255, 67, 11,0.3);
+  transition: 0.2s;
+}
+
+
+
+/* #option-tab{
   border:1px solid black;
   border-radius: 10px;
   margin:10px;
@@ -64,4 +154,4 @@ p input{
   align-items:center;
   font-size:12px;
   width: 90px;
-}
+} */

@@ -11,7 +11,8 @@ const Span = styled.div`
   display:flex;
   border:1px solid rgba(0,0,0,0);
   flex-direction:column;
-  background-color: ${props => props.isdragging ? 'orange' : 'rgba(0,0,0,0)'};
+  align-content:center;
+  background-color: ${props => props.isdragging ? 'rgba(255,128,0,0.5)' : 'rgba(0,0,0,0)'};
 `;
 
 const Div = styled.div`
@@ -22,7 +23,6 @@ const Div = styled.div`
 const colStyle= {
   width:"10vh",
   background:"rgba(0,0,0,0)",
-  //border:"1px solid black",
   padding:0,
   display:"flex",
   alignContent:"center"

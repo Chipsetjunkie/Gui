@@ -13,37 +13,37 @@ const conStyle = {
 }
 
 const binStyle={
-    border:"1px solid black",
     justifyContent:"flex-end",
     width:"100px",
     height:"100px"
 }
 
 const Bin = styled.div`
-  background-color: ${props => props.isdragging ? 'lightGreen' : 'white'};
+  background-color: ${props => props.isdragging ? 'rgba(51,255,153,0.2)' : 'rgba(0,0,0,0)'};
   width:100%;
   height:100%;
-  border:1px solid green;
 `;
 
 const TaskList = styled.div`
   padding: 8px;
+
   transition: background-color 0.2s ease;
-  background-color: ${props => (props.isDraggingOver ? 'skyblue' : 'white')};
+  background-color: ${props => (props.isDraggingOver ? 'rgba(66, 111, 254, 0.1)' : 'rgba(0,0,0,0)')};
   display: flex;
   justify-content:center;
 `;
 
 const ItemContainer = styled.div`
-  border: 1px solid lightgrey;
-  border-radius: 50%;
-  padding: 50px;
-  background-color: ${props => props.isdragging ? 'lightGreen' : 'white'};
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin:10px;
+      width: 100px;
+      height: 50px;
+      border-radius: 10px;
+      box-shadow: 0px 3px 20px -7px rgba(0,0,0,1) ;
+      background:#191921;
+      color:white;
 `;
 
 
@@ -100,7 +100,7 @@ class Panel extends Component {
             ref={provided.innerRef}
             {...provided.droppableProps}
             isdragging={snapshot.isDraggingOver}>
-              bin
+              <img src="bin.png" alt="trash" width="100px" height="100px"/>
               {provided.placeholder}
             </Bin>
           }
