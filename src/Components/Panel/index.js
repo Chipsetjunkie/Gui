@@ -2,11 +2,14 @@ import React, { Component,Fragment } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
+import {Fade} from 'react-animation-components';
+import Animate from './animate';
 
+// Helper Functions
 
 const conStyle = {
   position:"relative",
-  top:"6vh",
+  top:"5vh",
   width:"100%",
   display:"flex",
   justifyContent:"space-around"
@@ -47,7 +50,29 @@ const ItemContainer = styled.div`
 `;
 
 
+// Main Element
+
 class Panel extends Component {
+
+  state ={
+    save:false,
+    initial:true
+  }
+
+  componentDidMount(){
+    setTimeout(()=>this.setState({...this.state, initial:false}), 2000)
+  }
+
+  save = () =>{
+    localStorage.setItem('state',JSON.stringify(this.props.state));
+    this.setState({save:true})
+    setTimeout(()=>{
+       this.setState({save:false})
+   }, 3000);
+  }
+
+  animate = () =>{
+  }
 
   displayPanelItems = () =>{
     const items = ['button', 'input', 'h', 'p']
@@ -74,9 +99,15 @@ class Panel extends Component {
 
   render() {
     return (
-
+      <>
+      <p style={{opacity:this.state.save?"1":"0", marginLeft:"12%", marginTop:"5px",color:"white"}}>saved!!</p>
       <div style={conStyle} >
-      <div></div>
+      <Fade in delay ={400}>
+      <ItemContainer style={{marginTop:"20px", cursor:"pointer"}}><span style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%", height:"100%"}}
+      title="Technically this autosaves,but just incase if you're paranoid do feel free to smash the button" onClick={this.save}>
+      Save!!</span></ItemContainer>
+      </Fade>
+          <Animate initial={this.state.initial}>
           <Droppable
                 droppableId={"Footer"}
                 direction="horizontal"
@@ -93,6 +124,8 @@ class Panel extends Component {
               </TaskList>
             }
           </Droppable>
+          </Animate>
+          <Fade in delay={400}>
           <div style={binStyle}>
           <Droppable droppableId={"Bin"}>
           {(provided, snapshot) =>
@@ -106,8 +139,9 @@ class Panel extends Component {
           }
           </Droppable>
           </div>
+          </Fade>
         </div>
-
+        </>
 
     );
   }

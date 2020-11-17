@@ -1,7 +1,7 @@
 export const button = {type:'Button',
 property:{
     outline:false,
-    color:"Primary",
+    color:"primary",
     size:"",
     value:"Click me",
     height:"",

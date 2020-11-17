@@ -5,6 +5,15 @@ import Options from "./options";
 import "./meta.css";
 
 
+
+const nameStyle={
+  background:"rgba(0,0,0,0)",
+  paddingTop:"10px",
+  border:"0",
+  color:"white",
+  width:"80%"
+}
+
 class Meta extends Component {
   state = {
     enter:true,
@@ -18,11 +27,21 @@ class Meta extends Component {
                         type:this.props.state.elements[i].type, id:this.props.state.elements[i].id})
   }
 
-  closeProperty = (e) =>{
+  closeProperty = e =>{
     this.setState({...this.state,enter:true, data:{}, type:"", id:null})
   }
 
+  changeName = e =>{
+    this.props.changeName(e.target.name, e.target.value)
+
+  }
+
+  lockItem = e =>{
+     this.props.lockItem(e.target.name)
+  }
+
   render() {
+    const s = this.props.state.activeElements
     return (
       <div id="parentDiv">
       {!this.state.enter?
@@ -38,19 +57,19 @@ class Meta extends Component {
       </div>
       </FadeTransform>:
 
-        <Scrollbars style={{height:"250px", width:"45%"}} autoHideTimeout={100} renderTrackVertical={props => <div {...props} className="track-vertical" style={{display:"none"}}/>} autoHide>
+        <Scrollbars style={{height:"250px", width:"120px"}} autoHideTimeout={100} renderTrackVertical={props => <div {...props} className="track-vertical" style={{display:"none"}}/>} autoHide>
         <div id="childDiv">
         <Stagger in duration={100}>
-        {Object.keys(this.props.state.activeElements).map((i,index) =>(
+        {Object.keys(s).map((i,index) =>(
           <Fade key={index}>
           <div id="card">
             <div id="settings">
-              <img src="settings.png" alt="s" width="14px" height="14px" onClick={e=> this.changeProperty(e,this.props.state.activeElements[i].id)}/>
-              <img src="unlock.png" alt="e" width="14px" height="14px"/>
+              <img src="settings.png" alt="s" width="14px" height="14px" onClick={e=> this.changeProperty(e,s[i].id)}/>
+              <img name={s[i].id} src={s[i].disable?"lock.png":"unlock.png"} alt="e" width="14px" height="14px" onClick={this.lockItem}/>
             </div>
             <div id="indicator">
-              <p class="orange"></p>
-              <p style={{paddingLeft:"10px", marginTop:"5px", fontSize:"12px"}}>{this.props.state.activeElements[i].name}</p>
+              <p className="orange"></p>
+              <input style={nameStyle} name={s[i].id} value={s[i].name} onChange={this.changeName}></input>
             </div>
           </div>
           </Fade>

@@ -32,15 +32,11 @@ const colStyle= {
 const conStyle = {
       height:"77vh",
       marginTop:"20px",
-      borderImage: "url 50 round"
+      border:"1px dashed rgba(256,256,256,0.2)"
 }
 
 const rowStyle = {
-
     height:"100%",
-    //background:"royalblue",
-    //border:"1px solid black",
-
 }
 
 
@@ -54,6 +50,7 @@ class Canvas extends Component {
       <Col key={col+index} xs="12" sm="4" style={colStyle}>
       <Droppable droppableId={col}>
       {(provided,snap) => (
+
       <Span
       ref={provided.innerRef}
       {...provided.droppableProps}
@@ -65,6 +62,7 @@ class Canvas extends Component {
             <Draggable
               draggableId = {c}
               index={index}
+              isDragDisabled={state.activeElements[c].disable}
             >
             {(provided, snapshot) => (
             <Div
@@ -73,16 +71,17 @@ class Canvas extends Component {
               ref={provided.innerRef}
               isdragging={snapshot.isDragging}
               >
-            {constructElements(state.elements[c])}
+            {constructElements(state.elements[c],state.activeElements[c])}
             </Div>
 
             )}
             </Draggable>
             </Fragment>
+
           )
       })}
       {provided.placeholder}
-      </Span>
+        </Span>
       )}
       </Droppable>
       </Col>
@@ -96,7 +95,9 @@ class Canvas extends Component {
     return (
       <Scrollbars style={{height:"79.6vh"}} autoHide autoHideTimeout={100}>
       <Container fluid={true} style={conStyle}>
+
         {this.buildCanvas(this.props.state)}
+
       </Container>
       </Scrollbars>
     );
