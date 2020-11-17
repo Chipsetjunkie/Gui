@@ -8,6 +8,7 @@ import  {constructElements} from "../Elements";
 
 
 const Span = styled.div`
+  width:100%;
   display:flex;
   border:1px solid rgba(0,0,0,0);
   flex-direction:column;
