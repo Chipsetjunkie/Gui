@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'reactstrap';
 import { Draggable } from 'react-beautiful-dnd';
 import { Droppable } from 'react-beautiful-dnd';
 import { Scrollbars } from 'react-custom-scrollbars';
+import {Fade} from 'react-animation-components';
 import styled from 'styled-components';
 import  {constructElements} from "../Elements";
 
@@ -95,11 +96,13 @@ class Canvas extends Component {
   render() {
     return (
       <Scrollbars style={{height:"79.6vh"}} autoHide autoHideTimeout={100}>
+      <Fade in delay="1100"> 
       <Container fluid={true} style={conStyle}>
 
         {this.buildCanvas(this.props.state)}
 
       </Container>
+      </Fade>
       </Scrollbars>
     );
   }
